@@ -9,6 +9,7 @@ angular.module('multichatApp')
         var ws = $websocket(HOST);
         var peopleManagement = new PeopleManagement(ws, growl);
         var audioManagement = new AudioManagement(ws, growl);
+        var drawingManagement = new DrawingManagement(ws);
         var messagesManagement = new MessagesManagement(ws, growl);
 
         ws.onOpen(function() {
@@ -40,6 +41,12 @@ angular.module('multichatApp')
                     case "messages":
                         messagesManagement.addMessage(obj.data);
                         break;
+                    case "drawings":
+                        if (obj.data.operation == 'add')
+                            drawingManagement.addObject(obj.data.type, obj.data.info);
+                        else if (obj.data.operation == 'clearAll')
+                            drawingManagement.clearObjects();
+                        break;
                     case "audio":
                         audioManagement.updateAudioUrl(obj.data.url);
                         break;
@@ -50,6 +57,7 @@ angular.module('multichatApp')
             ws: ws,
             peopleManagement: peopleManagement,
             audioManagement: audioManagement,
+            drawingManagement: drawingManagement,
             messagesManagement: messagesManagement,
         };
         return methods;

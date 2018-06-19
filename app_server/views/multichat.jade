@@ -21,6 +21,21 @@ block audio
         audio#audioId(controls width='100%' height='100%')
             source#audioSource(src='#{config.audioUrl}')
 
+block drawings
+    div(ng-controller='drawingCtrl')
+        button.btn.btn-default(ng-click='addCircle()') #{lang.addCircle}
+        | &nbsp;
+        button.btn.btn-default(ng-click='addRectangle()') #{lang.addRectangle}
+        | &nbsp;
+        button.btn.btn-default(ng-click='addTriangle()') #{lang.addTriangle}
+        | &nbsp;
+        button.btn.btn-default(ng-click='getPencil()') #{lang.pencil}
+        | &nbsp;
+        button.btn.btn-default(ng-click='getSelection()') #{lang.selection}
+        | &nbsp;
+        button.btn.btn-default(ng-click='clearAll()') #{lang.clearAll}
+        canvas#canvas
+
 block messages
     div#messageList(ng-controller='messagesCtrl')
         div(ng-if='data.loading[0] == true')

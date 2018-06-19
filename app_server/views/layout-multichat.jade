@@ -19,3 +19,22 @@ block content-common
                         .panel-heading #{layoutMultichat.audio}
                         .panel-body
                             block audio
+        .row
+            .col-md-12
+                .panel.panel-info
+                    .panel-heading
+                        ul.nav.nav-tabs.nav-justified
+                            li.active
+                                a(href='#geolocation' data-toggle='tab') #{layoutMultichat.geolocation}
+                            li
+                                a(href='#drawings' data-toggle='tab') #{layoutMultichat.drawings}
+                            li
+                                a(href='#presentations' data-toggle='tab') #{layoutMultichat.presentations}
+                    .panel-body
+                        .tab-content
+                            .tab-pane.fade.in.active#geolocation
+                                block geolocation
+                            .tab-pane.fade#drawings
+                                block drawings
+                            .tab-pane.fade#presentations
+                                block presentations

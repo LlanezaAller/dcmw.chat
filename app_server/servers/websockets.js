@@ -40,6 +40,9 @@ module.exports = function(httpsServer) {
                             disconnectUser(obj.data.userName);
                         }
                         break;
+                    case 'drawings':
+                        broadcast(message, ''); //to notify everybody
+                        break;
                     case 'messages':
                         broadcast(message, ''); //to notify everybody
                         break;
