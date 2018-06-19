@@ -6,7 +6,11 @@ function DrawingManagement(ws) {
     canvas.freeDrawingBrush.lineWidth = 10;
 
     canvas.on('path:created', function(e) {
-        sendData('Path', e.path, 'add');
+        if (canvas.isDrawingMode)
+            sendData('Path', e.path, 'add');
+        else {
+            sendData('', '', 'selection');
+        }
     });
 
     this.addCircle = function() {
@@ -76,10 +80,6 @@ function DrawingManagement(ws) {
                 'info': info,
             }
         }));
-    }
-
-    function sendObject(type, obj) {
-        ws.send(JSON.stringify({ 'type': type, 'data': obj }));
     }
 
     function createPath(obj) {

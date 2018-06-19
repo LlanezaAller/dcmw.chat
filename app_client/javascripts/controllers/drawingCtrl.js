@@ -1,21 +1,21 @@
 angular.module('multichatApp')
     .controller('drawingCtrl', function($scope, webSocketManager) {
-        $scope.addCircle = function(){
+        $scope.addCircle = function() {
             webSocketManager.drawingManagement.addCircle();
         };
-        $scope.addRectangle = function(){
+        $scope.addRectangle = function() {
             webSocketManager.drawingManagement.addRectangle();
         };
-        $scope.addTriangle = function(){
+        $scope.addTriangle = function() {
             webSocketManager.drawingManagement.addTriangle();
         };
-        $scope.getPencil = function(){
+        $scope.getPencil = function() {
             webSocketManager.drawingManagement.getPencil();
         };
-        $scope.getSelection = function(){
+        $scope.getSelection = function() {
             webSocketManager.drawingManagement.getSelection();
         };
-        $scope.clearAll = function(){
+        $scope.clearAll = function() {
             webSocketManager.drawingManagement.clearAll();
         };
     });
