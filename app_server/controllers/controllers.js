@@ -183,10 +183,51 @@ module.exports.register = function(req, res, next) {
         module.exports.multichat(req, res, next);
     }
 };
+
+var config = require('../config');
+var layoutMultichat = {
+    drawings: 'Drawings',
+    geolocation: 'Geolocation',
+    messages: 'Messages',
+    people: 'People',
+    presentations: 'Presentations',
+    audio: 'Audio broadcast',
+    video: 'Video broadcast',
+    videoconferences: 'Videoconferences'
+};
+
 module.exports.multichat = function(req, res, next) {
     res.render('multichat', {
+        authenticated: true,
+        config: {
+            videoUrl: config.videoUrl,
+            audioUrl: config.audioUrl,
+            presentationUrl: config.presentationUrl
+        },
+        sub: req.sub,
         layoutCommon: layoutCommon,
+        layoutMultichat: layoutMultichat,
         lang: {
+            addCircle: 'Add Cricle',
+            addRectangle: 'Add Rectangle',
+            addTriangle: 'Add Triangle',
+            pencil: 'Pencil',
+            selectAudio: 'Select audio',
+            selectVideo: 'Select video',
+            selection: 'Selection',
+            sendFiles: 'Send files and pictures',
+            showEmojis: 'Show the list of available Emojis',
+            clearAll: 'Clear all',
+            disable: 'Turn off playback',
+            send: 'Send',
+            commentEnter: 'Type a message here',
+            modal: {
+        selectAudio: 'Select the URL of the audio you want to share',
+            selectVideo: 'Select the URL of the video you want to share',
+            url: 'URL',
+            accept: 'Accept',
+            cancel: 'Cancel'
+    },
             title: 'Multichat'
         }
     });

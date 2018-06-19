@@ -40,6 +40,12 @@ module.exports = function(httpsServer) {
                             disconnectUser(obj.data.userName);
                         }
                         break;
+                    case 'messages':
+                        broadcast(message, ''); //to notify everybody
+                        break;
+                    case 'audio':
+                        broadcast(message, ''); //to notify everybody
+                        break;
                     default:
                         console.log('Unrecognized message');
                         break;
@@ -49,6 +55,50 @@ module.exports = function(httpsServer) {
 
         ws.on('close', function () {
             console.log('Closing connection with WebSocketServer');
+            broadcast = function(message, sentBy) {125
+                connections.forEach(function(cnn) {
+                    if (cnn.user.userName != sentBy) {
+                        console.log('Sent: %s to %s', message, cnn.user.userName);
+                        if (cnn.ws) cnn.ws.send(message);
+                    }
+                });
+            };
+            loadInfoFromOthers = function broadcast(ws, sentBy) {
+                connections.forEach(function (cnn) {
+                    if (cnn.user.userName != sentBy) {
+                        var message = {
+                            'section': 'people',
+                            'data': {
+                                'operation': 'connected',
+                                'name': cnn.user.name,
+                                'userName': cnn.user.userName
+                            }
+                        };
+                        console.log('**Sent: %s to %s', JSON.stringify(message), sentBy);
+                        if (ws) ws.send(JSON.stringify(message));
+                        var message = {
+                            'section': 'geolocation',
+                            'data': {
+                                'operation': 'connected',
+                                'name': cnn.user.name,
+                                'userName': cnn.user.userName,
+                                'latitude': cnn.geo.latitude,
+                                'longitude': cnn.geo.longitude
+                            }
+                        };
+                        console.log('**Sent: %s to %s', JSON.stringify(message), sentBy);
+                        if (ws) ws.send(JSON.stringify(message));
+                    }
+                });
+            };
+            disconnectUser = function(sentBy) {
+                for (var i = 0; i < connections.length; i++) {
+                    if (connections[i].user.userName == sentBy) {
+                        connections.splice(i, 1);
+                        i--;
+                    }
+                }
+            };
         });
 
         broadcast = function(message, sentBy) {

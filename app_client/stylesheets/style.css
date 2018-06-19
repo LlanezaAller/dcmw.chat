@@ -20,16 +20,6 @@ ul#listGroupPeople li:first-child {
   font-style: italic;
 }
 
-/*MAP*/
-#map {
-  height: 400px;
-  width: 100%;
-}
-
-/*CANVAS*/
-#canvas {
-  background-color: oldlace;
-}
 
 /*MESSAGES*/
 #messageList {
@@ -110,13 +100,4 @@ ul#listGroupMessages {
 #uploadPictureDropzone {
   border: dashed;
   color: blue;
-}
-
-/*******************VIDEOCONFERENCE*********/
-#videoconferenceLocal {
-  padding-left: 5px;
-}
-
-.videoRemote {
-  padding-left: 5px;
 }
