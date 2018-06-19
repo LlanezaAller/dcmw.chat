@@ -10,13 +10,11 @@ angular.module('multichatApp')
         var peopleManagement = new PeopleManagement(ws, growl);
         var audioManagement = new AudioManagement(ws, growl);
         var drawingManagement = new DrawingManagement(ws);
-        var messagesManagement = new MessagesManagement(ws, growl);
 
         ws.onOpen(function() {
             peopleManagement.setLoading(false);
-            messagesManagement.setLoading(false);
             console.log("Open");
-            growl.success('Server started. Enjoy!',{
+            growl.success('Server started. Enjoy!', {
                 title: 'Success',
             });
             setInterval(function() {
@@ -29,17 +27,14 @@ angular.module('multichatApp')
             ws.close();
         };
         ws.onMessage(function(message) {
-            if(utils.isJson(message.data)) {
+            if (utils.isJson(message.data)) {
                 var obj = JSON.parse(message.data);
-                switch(obj.section) {
+                switch (obj.section) {
                     case "people":
                         if (obj.data.operation == 'connected')
                             peopleManagement.addPerson(obj.data);
                         else if (obj.data.operation == 'disconnected')
                             peopleManagement.deletePerson(obj.data);
-                        break;
-                    case "messages":
-                        messagesManagement.addMessage(obj.data);
                         break;
                     case "drawings":
                         if (obj.data.operation == 'add')
@@ -58,7 +53,6 @@ angular.module('multichatApp')
             peopleManagement: peopleManagement,
             audioManagement: audioManagement,
             drawingManagement: drawingManagement,
-            messagesManagement: messagesManagement,
         };
         return methods;
     });
