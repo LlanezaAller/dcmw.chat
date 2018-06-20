@@ -6,7 +6,7 @@ module.exports = function(httpsServer) {
     });
     wss.on('error', onError);
     wss.on('listening', onListening);
-//to save all the connections from clients as well as other info
+    //to save all the connections from clients as well as other info
     var connections = [];
     wss.on('connection', function(ws) {
         console.log('Creating connection with WebSocketServer');
@@ -34,8 +34,7 @@ module.exports = function(httpsServer) {
                             });
                             broadcast(message, obj.data.userName); //to notify others
                             loadInfoFromOthers(ws, obj.data.userName);
-                        }
-                        else if (obj.data.operation == 'disconnected') {
+                        } else if (obj.data.operation == 'disconnected') {
                             broadcast(message, obj.data.userName); //to notify others
                             disconnectUser(obj.data.userName);
                         }
@@ -56,9 +55,9 @@ module.exports = function(httpsServer) {
             }
         });
 
-        ws.on('close', function () {
+        ws.on('close', function() {
             console.log('Closing connection with WebSocketServer');
-            broadcast = function(message, sentBy) {125
+            broadcast = function(message, sentBy) {
                 connections.forEach(function(cnn) {
                     if (cnn.user.userName != sentBy) {
                         console.log('Sent: %s to %s', message, cnn.user.userName);
@@ -67,7 +66,7 @@ module.exports = function(httpsServer) {
                 });
             };
             loadInfoFromOthers = function broadcast(ws, sentBy) {
-                connections.forEach(function (cnn) {
+                connections.forEach(function(cnn) {
                     if (cnn.user.userName != sentBy) {
                         var message = {
                             'section': 'people',
@@ -113,7 +112,7 @@ module.exports = function(httpsServer) {
             });
         };
         loadInfoFromOthers = function broadcast(ws, sentBy) {
-            connections.forEach(function (cnn) {
+            connections.forEach(function(cnn) {
                 if (cnn.user.userName != sentBy) {
                     var message = {
                         'section': 'people',
@@ -149,19 +148,21 @@ module.exports = function(httpsServer) {
             }
         };
     });
+
     function isJson(str) {
         try {
             JSON.parse(str);
-        }
-        catch (e) {
+        } catch (e) {
             return false;
         }
         return true;
     }
+
     function onError(err) {
         console.error(err.message);
         process.exit(1);
     }
+
     function onListening() {
         console.log('The Websocket server is running on PORT: ' + config.port);
     }
